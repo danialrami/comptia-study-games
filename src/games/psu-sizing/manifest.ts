@@ -7,6 +7,9 @@ export const psuSizingGame: GameManifest = {
   title: "What PSU Do You Need?",
   blurb: "Sum a full parts list, add headroom, size the power supply. Two modes.",
   examDomain: "A+ Core 1 · Hardware / power",
+  tags: ["comptia", "hardware"],
+  badge: "W",
+  accent: "rust",
   engine: createPsuSizingEngine(),
   mount,
 };
