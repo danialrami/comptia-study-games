@@ -1,0 +1,115 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Base tokens + shared game-loop styling.
+
+   This is a deliberately plain, functional theme. Everything is driven by the
+   custom properties in :root, so a restyle (Amacher) is mostly retokenizing
+   here plus the layout in shell.css — no markup or logic changes required.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --csg-bg: #0f1216;
+  --csg-surface: #181d24;
+  --csg-surface-2: #212832;
+  --csg-line: #2c3541;
+  --csg-text: #e7ecf2;
+  --csg-muted: #93a1b1;
+  --csg-accent: #4cc2ff;
+  --csg-right: #37d67a;
+  --csg-wrong: #ff6b6b;
+  --csg-radius: 12px;
+  --csg-gap: 16px;
+  --csg-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --csg-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--csg-bg);
+  color: var(--csg-text);
+  font-family: var(--csg-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.csg-mono { font-family: var(--csg-mono); }
+
+.csg-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--csg-muted);
+  border: 1px solid var(--csg-line);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+/* Buttons */
+.csg-btn {
+  font: inherit;
+  color: var(--csg-text);
+  background: var(--csg-surface-2);
+  border: 1px solid var(--csg-line);
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.05s;
+}
+.csg-btn:hover { border-color: var(--csg-accent); }
+.csg-btn:active { transform: translateY(1px); }
+.csg-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.csg-btn--primary { background: var(--csg-accent); color: #04121c; border-color: transparent; font-weight: 600; }
+
+.csg-input {
+  font: inherit;
+  width: 100%;
+  color: var(--csg-text);
+  background: var(--csg-bg);
+  border: 1px solid var(--csg-line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 1.15rem;
+}
+.csg-input:focus { outline: 2px solid var(--csg-accent); outline-offset: 1px; }
+
+.csg-chip {
+  font: inherit;
+  font-family: var(--csg-mono);
+  color: var(--csg-text);
+  background: var(--csg-surface-2);
+  border: 1px solid var(--csg-line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.csg-chip:hover { border-color: var(--csg-accent); }
+.csg-chip--on { background: var(--csg-accent); color: #04121c; border-color: transparent; }
+
+/* Shared quiz loop */
+.csg-quiz { max-width: 640px; margin: 0 auto; }
+.csg-quiz__scorebar {
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--csg-muted); font-size: 0.9rem; margin-bottom: 10px;
+}
+.csg-quiz__card {
+  background: var(--csg-surface);
+  border: 1px solid var(--csg-line);
+  border-radius: var(--csg-radius);
+  padding: 24px;
+}
+.csg-quiz__prompt { margin-bottom: 18px; }
+.csg-quiz__input { margin-bottom: 14px; }
+.csg-quiz__feedback { min-height: 1.5em; margin: 6px 0 16px; font-size: 0.95rem; color: var(--csg-muted); }
+.csg-quiz__feedback--right { color: var(--csg-right); }
+.csg-quiz__feedback--wrong { color: var(--csg-wrong); }
+.csg-quiz__actions { display: flex; gap: 10px; }
+
+/* Base-conversion view */
+.csg-bc__ask { color: var(--csg-muted); margin: 10px 0 6px; }
+.csg-bc__value { font-size: 2.6rem; font-weight: 600; letter-spacing: 0.04em; word-break: break-all; }
+
+/* PSU view */
+.csg-psu__ask { margin: 4px 0 14px; font-size: 1.1rem; }
+.csg-psu__parts { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.csg-psu__parts td { padding: 6px 8px; border-bottom: 1px solid var(--csg-line); }
+.csg-psu__w { text-align: right; color: var(--csg-muted); }
+.csg-psu__ladder { display: flex; flex-wrap: wrap; gap: 8px; }

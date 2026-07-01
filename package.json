@@ -1,0 +1,20 @@
+{
+  "name": "comptia-study-games",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "description": "A modular, expandable suite of browser drill-games for the CompTIA trifecta. Game graders are pure and contract-tested, so answer accuracy is a proven property, not a hope.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.2"
+  }
+}

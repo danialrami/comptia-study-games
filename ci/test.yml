@@ -1,0 +1,22 @@
+# CI: run the grader contract tests + typecheck on every push/PR.
+#
+# NOTE: the integration token that scaffolded this repo can't write to
+# .github/workflows/, so this lives at ci/test.yml. To activate:
+#     git mv ci/test.yml .github/workflows/test.yml && git commit && git push
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run build   # tsc --noEmit + vite build
+      - run: npm test        # vitest run
