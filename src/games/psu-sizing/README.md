@@ -9,13 +9,15 @@ percentage, ask what power supply the build needs.
 required = Σ(component watts) × (1 + headroom)
 ```
 
-Two modes:
+Two modes exist in the engine; the game **ships in `psu-pick`** (pick-from-bank):
 
-- **`wattage`** — answer the minimum required wattage. Graded numerically within
-  a ±1 W rounding tolerance.
-- **`psu-pick`** — choose a supply off the standard retail ladder
-  (`PSU_LADDER` = 400/450/500/550/600/650/700/750/850/1000/1200/1500 W). The
-  correct answer is the **smallest rung ≥ required**.
+- **`psu-pick`** *(shipped)* — the UI shows the raw parts sum, states a headroom
+  %, and presents a **bank of real PSU wattages** to choose from. The learner
+  applies the headroom themselves and picks the **smallest rung ≥ required** off
+  the standard retail ladder
+  (`PSU_LADDER` = 400/450/500/550/600/650/700/750/850/1000/1200/1500 W).
+- **`wattage`** — answer the minimum required wattage as a number. Graded
+  numerically within a ±1 W rounding tolerance. (Not enabled in the shipped game.)
 
 Headroom is drawn from 20% / 25% / 30% per the class guidance ("component sum ×
 1.2–1.3").
