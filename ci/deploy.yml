@@ -1,0 +1,55 @@
+name: Build & Deploy → hostinger
+
+# Builds the static site (Vite) and publishes dist/ to the `hostinger` branch,
+# which Hostinger's Git auto-deploy webhook pulls into public_html.
+#
+# Mirrors the danialrami/lufs-catalog-website deploy flow. A push to `main`
+# deploys with no local build needed. The deploy is GATED on the grader
+# contract tests + typecheck, so a build that grades wrong never ships — the
+# whole point of this suite.
+#
+# NOTE: staged at ci/deploy.yml because the scaffolding token can't write to
+# .github/workflows/. Activate it with:
+#   git mv ci/deploy.yml .github/workflows/deploy.yml && git commit && git push
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Plain install (no committed lockfile), matching the catalog flow's
+      # non-frozen install.
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test (grader contracts) + typecheck
+        run: npm test
+
+      - name: Build (static → dist/)
+        run: npm run build
+
+      - name: Publish dist/ to the hostinger branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: hostinger
+          commit_message: "deploy ${{ github.sha }}"
