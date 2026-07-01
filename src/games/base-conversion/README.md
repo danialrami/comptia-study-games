@@ -1,10 +1,19 @@
 # Base Conversion Drill
 
 Show a value in one base (binary, decimal, hex), ask for it in another. All six
-directions. Difficulty tiers are grounded in real objects from A+ Day 1:
+directions.
+
+## Shipped configuration: 8-bit octet
+
+The game ships **locked to the 8-bit byte** (`tiers: ["byte"]`) — the unit
+CompTIA actually tests: IPv4 octets, 0–255, all-ones `11111111` = 255, and one
+byte = two hex digits (e.g. 192 = `0xC0`). Binary answers are zero-padded to
+eight bits (`00000000`). No nibble/16-bit rounds.
+
+The engine still supports other widths for reuse (they're just not enabled here):
 
 - **nibble** — 4 bits / one hex digit (0–15)
-- **byte** — 8 bits (0–255)
+- **byte** — 8 bits (0–255) ← the shipped tier
 - **word** — 16 bits (0–65535)
 
 ## Grading
