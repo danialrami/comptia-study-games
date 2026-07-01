@@ -1,115 +1,189 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Base tokens + shared game-loop styling.
+   LUFS Arcade — base tokens + shared game-loop styling.
 
-   This is a deliberately plain, functional theme. Everything is driven by the
-   custom properties in :root, so a restyle (Amacher) is mostly retokenizing
-   here plus the layout in shell.css — no markup or logic changes required.
+   Identity: LUFS Audio "lab tool" surface. Language: 16-bit pixel / neobrutalist
+   over the LUFS DNA — charcoal ground, teal-led four-color spectrum, hard 2px
+   borders, flat fills (no gradients/blur), offset solid shadows, a pixel display
+   face (Silkscreen) for arcade chrome + Host Grotesk / Public Sans / Space Mono.
+
+   Everything is driven by the :root custom properties, so a re-theme is mostly
+   retokenizing here + layout in shell.css. No markup or grading logic changes.
    ───────────────────────────────────────────────────────────────────────── */
 :root {
-  --csg-bg: #0f1216;
-  --csg-surface: #181d24;
-  --csg-surface-2: #212832;
-  --csg-line: #2c3541;
-  --csg-text: #e7ecf2;
-  --csg-muted: #93a1b1;
-  --csg-accent: #4cc2ff;
-  --csg-right: #37d67a;
-  --csg-wrong: #ff6b6b;
-  --csg-radius: 12px;
-  --csg-gap: 16px;
-  --csg-font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --csg-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* palette */
+  --csg-bg: #111111;
+  --csg-surface: #181b1f;
+  --csg-surface-2: #1e2228;
+  --csg-line: #fbf9e2;                 /* bold neobrutalist border = ink */
+  --csg-hair: rgba(251, 249, 226, 0.14); /* faint divider */
+  --csg-text: #fbf9e2;
+  --csg-muted: rgba(251, 249, 226, 0.6);
+  --csg-teal: #78beba;
+  --csg-rust: #d35233;
+  --csg-gold: #e7b225;
+  --csg-blue: #2069af;
+  --csg-accent: var(--csg-teal);       /* single-accent discipline: teal leads */
+  --csg-right: var(--csg-teal);
+  --csg-wrong: var(--csg-rust);
+  /* form */
+  --csg-radius: 0;                     /* hard corners */
+  --csg-bw: 2px;                       /* border weight */
+  --csg-gap: 20px;
+  /* type */
+  --csg-font: "Public Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --csg-disp: "Host Grotesk", var(--csg-font);
+  --csg-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --csg-px: "Silkscreen", var(--csg-mono);
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  background: var(--csg-bg);
+  background-color: var(--csg-bg);
   color: var(--csg-text);
   font-family: var(--csg-font);
-  line-height: 1.5;
+  font-weight: 300;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  cursor: none;
+  /* faint pixel grid — flat/graphic, not shading */
+  background-image:
+    linear-gradient(rgba(251, 249, 226, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 249, 226, 0.028) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
+img, canvas { image-rendering: pixelated; }
+a { color: inherit; }
+:focus-visible { outline: var(--csg-bw) solid var(--csg-teal); outline-offset: 2px; }
+
 .csg-mono { font-family: var(--csg-mono); }
 
+/* Tier / meta tag (e.g. the base-conversion "byte" chip) */
 .csg-tag {
   display: inline-block;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-family: var(--csg-px);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--csg-muted);
-  border: 1px solid var(--csg-line);
-  border-radius: 999px;
-  padding: 2px 10px;
+  color: var(--csg-teal);
+  border: var(--csg-bw) solid var(--csg-teal);
+  padding: 6px 9px;
 }
 
-/* Buttons */
+/* Buttons — neobrutalist: hard border, flat, invert on hover, press on active */
 .csg-btn {
-  font: inherit;
+  font-family: var(--csg-px);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--csg-text);
-  background: var(--csg-surface-2);
-  border: 1px solid var(--csg-line);
-  border-radius: 10px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: border-color 0.15s, transform 0.05s;
+  background: transparent;
+  border: var(--csg-bw) solid var(--csg-line);
+  border-radius: var(--csg-radius);
+  padding: 13px 18px;
+  cursor: none;
+  transition: transform 0.08s steps(2), background 0.12s steps(2), color 0.12s steps(2);
 }
-.csg-btn:hover { border-color: var(--csg-accent); }
-.csg-btn:active { transform: translateY(1px); }
-.csg-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.csg-btn--primary { background: var(--csg-accent); color: #04121c; border-color: transparent; font-weight: 600; }
+.csg-btn:hover { background: var(--csg-text); color: var(--csg-bg); }
+.csg-btn:active { transform: translate(1px, 1px); }
+.csg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.csg-btn:disabled:hover { background: transparent; color: var(--csg-text); }
+.csg-btn--primary {
+  background: var(--csg-teal);
+  color: #0c1413;
+  border-color: var(--csg-teal);
+}
+.csg-btn--primary:hover { background: var(--csg-gold); border-color: var(--csg-gold); color: #0c1413; }
+.csg-btn--primary:disabled:hover { background: var(--csg-teal); }
 
 .csg-input {
-  font: inherit;
+  font-family: var(--csg-mono);
   width: 100%;
   color: var(--csg-text);
-  background: var(--csg-bg);
-  border: 1px solid var(--csg-line);
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 1.15rem;
+  background: #0c0e10;
+  border: var(--csg-bw) solid var(--csg-line);
+  border-radius: var(--csg-radius);
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
 }
-.csg-input:focus { outline: 2px solid var(--csg-accent); outline-offset: 1px; }
+.csg-input:focus { outline: none; border-color: var(--csg-teal); box-shadow: 3px 3px 0 0 var(--csg-teal); }
 
 .csg-chip {
-  font: inherit;
-  font-family: var(--csg-mono);
-  color: var(--csg-text);
-  background: var(--csg-surface-2);
-  border: 1px solid var(--csg-line);
-  border-radius: 8px;
-  padding: 8px 10px;
-  cursor: pointer;
+  font-family: var(--csg-px);
+  font-size: 0.66rem;
+  color: var(--csg-muted);
+  background: transparent;
+  border: var(--csg-bw) solid var(--csg-line);
+  border-radius: var(--csg-radius);
+  padding: 10px 12px;
+  cursor: none;
+  transition: color 0.12s steps(2), background 0.12s steps(2);
 }
-.csg-chip:hover { border-color: var(--csg-accent); }
-.csg-chip--on { background: var(--csg-accent); color: #04121c; border-color: transparent; }
+.csg-chip:hover { color: var(--csg-text); }
+.csg-chip--on { background: var(--csg-teal); color: #0c1413; border-color: var(--csg-teal); }
 
-/* Shared quiz loop */
-.csg-quiz { max-width: 640px; margin: 0 auto; }
+/* ── Shared quiz loop ─────────────────────────────────────────────────────── */
+.csg-quiz { width: 100%; }
 .csg-quiz__scorebar {
-  display: flex; justify-content: space-between; align-items: center;
-  color: var(--csg-muted); font-size: 0.9rem; margin-bottom: 10px;
+  display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+  margin-bottom: 16px;
 }
+.csg-quiz__score, .csg-quiz__streak {
+  font-family: var(--csg-mono);
+  font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--csg-muted);
+  border: var(--csg-bw) solid var(--csg-line);
+  padding: 7px 12px;
+}
+.csg-quiz__streak:empty { display: none; }
 .csg-quiz__card {
   background: var(--csg-surface);
-  border: 1px solid var(--csg-line);
+  border: var(--csg-bw) solid var(--csg-line);
   border-radius: var(--csg-radius);
-  padding: 24px;
+  box-shadow: 6px 6px 0 0 var(--csg-teal);
+  padding: clamp(20px, 3vw, 32px);
 }
-.csg-quiz__prompt { margin-bottom: 18px; }
-.csg-quiz__input { margin-bottom: 14px; }
-.csg-quiz__feedback { min-height: 1.5em; margin: 6px 0 16px; font-size: 0.95rem; color: var(--csg-muted); }
-.csg-quiz__feedback--right { color: var(--csg-right); }
-.csg-quiz__feedback--wrong { color: var(--csg-wrong); }
-.csg-quiz__actions { display: flex; gap: 10px; }
+.csg-quiz__prompt { margin-bottom: 20px; }
+.csg-quiz__input { margin-bottom: 8px; }
+.csg-quiz__feedback {
+  min-height: 1.5em; margin: 18px 0 0; padding: 0; font-size: 0.94rem; color: var(--csg-muted);
+}
+.csg-quiz__feedback--right, .csg-quiz__feedback--wrong {
+  padding: 14px 16px; border: var(--csg-bw) solid; color: var(--csg-text);
+}
+.csg-quiz__feedback--right { border-color: var(--csg-right); background: rgba(120, 190, 186, 0.08); }
+.csg-quiz__feedback--wrong { border-color: var(--csg-wrong); background: rgba(211, 82, 51, 0.08); }
+.csg-quiz__actions { display: flex; gap: 10px; margin-top: 18px; }
 
-/* Base-conversion view */
-.csg-bc__ask { color: var(--csg-muted); margin: 10px 0 6px; }
-.csg-bc__value { font-size: 2.6rem; font-weight: 600; letter-spacing: 0.04em; word-break: break-all; }
+/* ── Base-conversion view ─────────────────────────────────────────────────── */
+.csg-bc__ask { color: var(--csg-muted); margin: 12px 0 6px; font-size: 1.02rem; }
+.csg-bc__value {
+  font-family: var(--csg-px);
+  font-size: clamp(1.9rem, 7vw, 3.4rem);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  word-break: break-all;
+  margin: 6px 0 4px;
+}
 
-/* PSU view */
-.csg-psu__ask { margin: 4px 0 14px; font-size: 1.1rem; }
-.csg-psu__parts { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.csg-psu__parts td { padding: 6px 8px; border-bottom: 1px solid var(--csg-line); }
-.csg-psu__w { text-align: right; color: var(--csg-muted); }
+/* ── PSU view ─────────────────────────────────────────────────────────────── */
+.csg-psu__ask { margin: 0 0 16px; font-size: 1.05rem; color: var(--csg-muted); }
+.csg-psu__ask strong { color: var(--csg-gold); font-weight: 500; }
+.csg-psu__parts {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+  border: var(--csg-bw) solid var(--csg-hair); margin-bottom: 20px;
+}
+.csg-psu__parts td { padding: 8px 10px; border-bottom: 1px solid var(--csg-hair); color: var(--csg-muted); }
+.csg-psu__w { text-align: right; color: var(--csg-text); }
+.csg-psu__sum td { border-bottom: none; color: var(--csg-text); background: rgba(251, 249, 226, 0.05); font-weight: 500; }
 .csg-psu__ladder { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── Custom pixel cursor (blocky, no radius) ──────────────────────────────── */
+.csg-cur-a, .csg-cur-b {
+  position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
+  mix-blend-mode: difference; will-change: transform;
+}
+.csg-cur-a { width: 8px; height: 8px; background: var(--csg-text); }
+.csg-cur-b { width: 20px; height: 20px; border: 2px solid rgba(251, 249, 226, 0.7); }
+@media (hover: none) { .csg-cur-a, .csg-cur-b { display: none; } body { cursor: auto; } }

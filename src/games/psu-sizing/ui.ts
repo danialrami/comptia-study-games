@@ -6,6 +6,18 @@ const view: QuizView<PsuSpec> = {
   renderPrompt(host, problem) {
     const spec = problem.spec;
     const pct = Math.round(spec.headroom * 100);
+    // Convenience only: we hand the learner the raw parts sum (trivial addition),
+    // but NOT the headroom result — they apply the headroom themselves, so it's
+    // possible to get wrong. The grader is unchanged; it still expects
+    // Σ(parts) × (1 + headroom).
+    const sum = spec.components.reduce((acc, c) => acc + c.watts, 0);
+
+    const head = document.createElement("p");
+    head.className = "csg-psu__ask";
+    head.innerHTML =
+      spec.mode === "wattage"
+        ? `Add <strong>${pct}%</strong> headroom. What is the minimum PSU wattage?`
+        : `Add <strong>${pct}%</strong> headroom, then pick the smallest PSU that covers it.`;
 
     const table = document.createElement("table");
     table.className = "csg-psu__parts";
@@ -20,14 +32,17 @@ const view: QuizView<PsuSpec> = {
       tr.append(name, w);
       tbody.append(tr);
     }
+    // Raw sum row — the convenience figure. Headroom is left to the learner.
+    const sumRow = document.createElement("tr");
+    sumRow.className = "csg-psu__sum";
+    const sumLabel = document.createElement("td");
+    sumLabel.textContent = "Sum of parts";
+    const sumW = document.createElement("td");
+    sumW.className = "csg-mono csg-psu__w";
+    sumW.textContent = `${sum} W`;
+    sumRow.append(sumLabel, sumW);
+    tbody.append(sumRow);
     table.append(tbody);
-
-    const head = document.createElement("p");
-    head.className = "csg-psu__ask";
-    head.innerHTML =
-      spec.mode === "wattage"
-        ? `Minimum PSU wattage with <strong>${pct}%</strong> headroom?`
-        : `Which PSU should you buy with <strong>${pct}%</strong> headroom?`;
 
     host.append(head, table);
   },

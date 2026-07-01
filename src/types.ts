@@ -54,6 +54,16 @@ export interface GameManifest {
   blurb: string;
   /** e.g. "A+ Core 1 · Networking" — shown as a tag, used for filtering later. */
   examDomain: string;
+  /**
+   * Machine-readable tags for the home-page filter (lowercase-kebab, e.g.
+   * "comptia", "hardware", "network", "audio"). Optional & purely presentational
+   * — the filter and card chips read this; nothing in the grading path does.
+   */
+  tags?: string[];
+  /** Short pixel badge glyph for the card (e.g. "01", "W", "/24"). Presentational. */
+  badge?: string;
+  /** Card accent color key. Presentational; defaults to teal. */
+  accent?: "teal" | "rust" | "gold" | "blue";
   /** The pure engine (also directly importable by tests). */
   engine: GameEngine;
   /** Render the game into `root`; return a handle the shell can destroy(). */
