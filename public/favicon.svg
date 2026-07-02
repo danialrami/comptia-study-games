@@ -1,0 +1,28 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" fill="#111111"/>
+  <!-- pixel LED equalizer — arcade + LUFS (loudness) in the four-color spectrum -->
+  <rect x="3" y="26" width="5" height="3" fill="#78BEBA"/>
+  <rect x="3" y="22" width="5" height="3" fill="#78BEBA"/>
+  <rect x="3" y="18" width="5" height="3" fill="#78BEBA"/>
+  <rect x="3" y="14" width="5" height="3" fill="#78BEBA"/>
+  <rect x="3" y="10" width="5" height="3" fill="#78BEBA"/>
+  <rect x="10" y="26" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="22" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="18" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="14" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="10" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="6" width="5" height="3" fill="#E7B225"/>
+  <rect x="10" y="2" width="5" height="3" fill="#E7B225"/>
+  <rect x="17" y="26" width="5" height="3" fill="#2069af"/>
+  <rect x="17" y="22" width="5" height="3" fill="#2069af"/>
+  <rect x="17" y="18" width="5" height="3" fill="#2069af"/>
+  <rect x="17" y="14" width="5" height="3" fill="#2069af"/>
+  <rect x="24" y="26" width="5" height="3" fill="#D35233"/>
+  <rect x="24" y="22" width="5" height="3" fill="#D35233"/>
+  <rect x="24" y="18" width="5" height="3" fill="#D35233"/>
+  <rect x="24" y="14" width="5" height="3" fill="#D35233"/>
+  <rect x="24" y="10" width="5" height="3" fill="#D35233"/>
+  <rect x="24" y="6" width="5" height="3" fill="#D35233"/>
+  <!-- floor line -->
+  <rect x="2" y="30" width="28" height="1" fill="#fbf9e2" opacity="0.35"/>
+</svg>
