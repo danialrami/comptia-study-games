@@ -198,7 +198,7 @@ export function mountDashboard(app: HTMLElement): void {
       <p class="csg-about__lead">A small arcade of <b>self-graded CompTIA drills</b>, built by
         <a class="csg-about__link" href="https://daniel-ramirez.io" target="_blank" rel="noopener noreferrer">Daniel Ramirez</a>
         as active-recall study tooling — and public, so anyone grinding the same certs can drill too.
-        A LUFS lab tool wearing its 16-bit heart on its sleeve.</p>
+        LUFS @ 16-bit</p>
       <div class="csg-about__notes">
         <div class="csg-note"><h4>Proven graders</h4><p>Every game is a pure, contract-tested grader. It never marks you wrong when you're right.</p></div>
         <div class="csg-note"><h4>Grows over time</h4><p>New machine = one folder + one line. Tag it and it drops into the filter — CompTIA today, audio tomorrow.</p></div>
