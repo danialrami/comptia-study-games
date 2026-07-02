@@ -22,7 +22,6 @@ const BASE_LABEL: Record<Base, string> = {
   10: "decimal",
   16: "hexadecimal",
 };
-const BASE_PREFIX: Record<Base, string> = { 2: "0b", 10: "", 16: "0x" };
 const ALL_BASES: Base[] = [2, 10, 16];
 
 export interface BaseConvSpec {
@@ -73,9 +72,9 @@ function explain(value: number, to: Base, tier: Tier): string {
     return `${value} = ${bits} → place values ${places.join(" + ") || "0"}.`;
   }
   if (to === 16) {
-    return `${value} ÷ 16 → each hex digit is one nibble (4 bits). ${value} = 0x${value
+    return `${value} ÷ 16 → each hex digit is one nibble (4 bits). ${value} = ${value
       .toString(16)
-      .toUpperCase()}.`;
+      .toUpperCase()} in hex.`;
   }
   return `Sum the set place values: ${value}.`;
 }
@@ -113,7 +112,7 @@ export function createBaseConversionEngine(
       const shown = render(value, from, tier, requireBinaryPadding);
       const spec: BaseConvSpec = { value, from, to, tier, requireBinaryPadding };
       const prompt =
-        `Convert ${BASE_LABEL[from]} ${BASE_PREFIX[from]}${shown} ` +
+        `Convert ${BASE_LABEL[from]} ${shown} ` +
         `to ${BASE_LABEL[to]}.`;
       return { prompt, spec };
     },

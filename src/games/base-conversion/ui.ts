@@ -23,8 +23,7 @@ const view: QuizView<BaseConvSpec> = {
     q.textContent = `Convert this ${LABEL[spec.from]} value to ${LABEL[spec.to]}:`;
     const big = document.createElement("div");
     big.className = "csg-bc__value csg-mono";
-    // Raw digits only — no 0b/0x notation prefix (the base is already named in the
-    // ask line above; matches how the number appears in class).
+    // Bare octet / bare hex — no 0b/0x prefix, matching CompTIA class notation.
     big.textContent = shown(spec);
     const tier = document.createElement("span");
     tier.className = "csg-tag";
