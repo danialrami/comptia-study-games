@@ -3,7 +3,6 @@ import { mountQuiz, type QuizView } from "../../lib/quiz-ui";
 import type { BaseConvSpec } from "./engine";
 
 const LABEL: Record<number, string> = { 2: "binary", 10: "decimal", 16: "hexadecimal" };
-const PREFIX: Record<number, string> = { 2: "0b", 10: "", 16: "0x" };
 
 function shown(spec: BaseConvSpec): string {
   const { value, from, requireBinaryPadding } = spec;
@@ -24,7 +23,9 @@ const view: QuizView<BaseConvSpec> = {
     q.textContent = `Convert this ${LABEL[spec.from]} value to ${LABEL[spec.to]}:`;
     const big = document.createElement("div");
     big.className = "csg-bc__value csg-mono";
-    big.textContent = `${PREFIX[spec.from]}${shown(spec)}`;
+    // Raw digits only — no 0b/0x notation prefix (the base is already named in the
+    // ask line above; matches how the number appears in class).
+    big.textContent = shown(spec);
     const tier = document.createElement("span");
     tier.className = "csg-tag";
     tier.textContent = spec.tier;
